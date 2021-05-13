@@ -1,4 +1,4 @@
-export default class Ball extends Phaser.GameObject.Sprite {
+export default class Ball extends Phaser.GameObjects.Sprite {
     
     constructor(scene, x, y, texture, paddleL, paddleR){
         
@@ -9,8 +9,8 @@ export default class Ball extends Phaser.GameObject.Sprite {
         
         this.setPosition(
         
-        this.scene.game.config.width*0.5,
-        this.scene.game.config.height*0.5
+            this.scene.game.config.width*0.5,
+            this.scene.game.config.height*0.5
             
         );
         
@@ -21,15 +21,18 @@ export default class Ball extends Phaser.GameObject.Sprite {
         
         }
         
-        this.initialVelocity
+        this.initialVelocity = 2;
         
         this.velocity = 2;
         this.accel = 0.025;
         
         this.paddleL = paddleL;
-        this.paddleL = paddleR;
+        this.paddleR = paddleR;
         
         this.halfSize = this.displayWidth*0.5;
+
+        this.balls = 10;
+
     }
     
     setPaddles(paddleL, paddleR){
@@ -41,7 +44,9 @@ export default class Ball extends Phaser.GameObject.Sprite {
     
     moveball(){
         
-        this.velocity += this.accel;
+        if (Math.abs(this.velocity)<=25) {
+            this.velocity += this.accel;
+        }
         
         this.x += this.velocity * this.direction.x;
         this.y += this.velocity * this.direction.y;
@@ -70,19 +75,22 @@ export default class Ball extends Phaser.GameObject.Sprite {
     
     checkScoreAndReset(){
         
-        if(x <= 0){
-            
+        if(this.x <= 80){
+            this.balls--;
             this.scene.scoreKeeper('right');
             this.resetMe();
         }
-        if(x >= this.scene.game.config.width){
-            
+        if(this.x >= this.scene.game.config.width-80){
+            this.balls--;
             this.scene.scoreKeeper('left');
-            this.resetMe();
-            
-            
+            this.resetMe();            
         }
         
+        if (this.balls<=0) {
+            this.velocity=0;
+            this.accel=0;
+            this.resetMe();
+        }
     }
     
     reverseMe(axis){
@@ -99,11 +107,21 @@ export default class Ball extends Phaser.GameObject.Sprite {
     }
     
     resetMe(){
-        
         this.setPosition(
-        this.game.config
         
-        )
+            this.scene.game.config.width*0.5,
+            this.scene.game.config.height*0.5
+            
+        );
+          
+        this.direction = {
+            
+            x: -1 + Math.random() * 2,
+            y: -1 + Math.random() * 2
+        
+        }
+        
+        this.velocity = this.initialVelocity;
         
     }
     

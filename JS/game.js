@@ -2,11 +2,11 @@ import MainScene from './scene.js';
 
 const config = {
     
-    Width: 750,
-    height: 500,
-    type: phaser.AUTO,
+    Width: 800,
+    height: 600,
+    type: Phaser.AUTO,
     parent: 'GameStop',
-    scene: [],
+    scene: [MainScene],
     backgroundColor: '#345',
     pixelArt: true
 }

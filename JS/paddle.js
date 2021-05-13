@@ -1,4 +1,5 @@
 import clamp from './utils.js';
+
 export default class Paddle extends Phaser.GameObjects.Sprite {
     
     constructor(scene, x, y, texture, keymap) {
@@ -25,7 +26,7 @@ export default class Paddle extends Phaser.GameObjects.Sprite {
         
         this.scene.input.keyboard.on('keydown', e =>{
             
-            this.starMoving(e);
+            this.startMoving(e);
             
         });
         this.scene.input.keyboard.on('keyup', e =>{
@@ -66,6 +67,7 @@ export default class Paddle extends Phaser.GameObjects.Sprite {
         this.direction = 0;
         
     }
+
     
     
     update(time)
